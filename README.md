@@ -1,8 +1,8 @@
 # ProjectConnect
 
 ## Setting up the environment
-1. Install a version of python 3. 
-2. Follow this [tutorial]( in order to set up your environment. By the end of the tutorial, you should have pip, virtualenv, and flask installed.
+1. Install python 3. 
+2. Follow this [tutorial](http://flask.pocoo.org/docs/1.0/installation/#) in order to set up your environment. By the end of these tutorials, you should have pip, virtualenv, and flask installed.
 3. Once you that run the following command in order to install the appropriate dependencies for the project.
 
 ```
