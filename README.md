@@ -10,3 +10,4 @@ pip install -r requirements.txt
 ```
 
 4. Edit projectconnect/app.py to add an endpoint. If you want to read more about flask, follow this [quickstart tutorial](http://flask.pocoo.org/docs/1.0/quickstart/).
+5. Run app.py on localhost:4000/<endpoint> to test your endpoint.
