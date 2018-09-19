@@ -13,6 +13,10 @@ def dimitri():
 @app.route('/huyhuynh', methods=['GET'])
 def huyhuynh():
  	return "This is Huy's Endpoint"
+
+@app.route('/monica', methods=['GET'])
+def monica():
+ 	return "This is Monica's Endpoint"
 	
  
 if __name__ == "__main__":
