@@ -18,6 +18,8 @@ def huyhuynh():
 def monica():
  	return "This is Monica's Endpoint"
 	
- 
+ @app.route('/carla', methods=['GET'])
+ def carla():
+	return "This is Carla's Endpoint"
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0', port=4000)
