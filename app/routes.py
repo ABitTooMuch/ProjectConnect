@@ -1,11 +1,7 @@
-from flask import Flask
-from database import Database
-
-app = Flask(__name__)
-
-Database.initialize()
+from app import app
 
 @app.route('/')
+@app.route('/index')
 def home():
     return "ABitTooMuchHome"
 
@@ -24,8 +20,3 @@ def monica():
 @app.route('/carla', methods=['GET'])
 def carla():
 	return "This is Carla's Endpoint"
-
-if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0', port=4000)
-
-
