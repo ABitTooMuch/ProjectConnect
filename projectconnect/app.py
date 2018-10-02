@@ -1,8 +1,6 @@
 from flask import Flask, render_template
 import clock
-
-
-
+from weather import Weather, Unit
 
 
 
@@ -34,6 +32,10 @@ def monica(username):
 	
 @app.route('/carla', methods=['GET'])
 def carla():
-	return "This is Carla's Endpoint"
+	weather = Weather(unit=Unit.CELSIUS)
+	lookup=weather.lookup(560743)
+	condition = lookup.condition
+	print(condition.text)
+	return condition.text
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0', port=4000)
