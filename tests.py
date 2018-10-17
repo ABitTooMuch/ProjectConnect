@@ -1,9 +1,9 @@
 import unittest
 
 from app import app, db
-from app.models.sql.attributes import Tag, Skill
-from app.models.sql.project import Project
-from app.models.sql.user import User
+from app.models.attributes import Tag, Skill
+from app.models.project import Project
+from app.models.user import User
 
 class UserModelCase(unittest.TestCase):
     def setUp(self):
@@ -39,8 +39,8 @@ class UserModelCase(unittest.TestCase):
         self.assertEqual(2, project1.contributors.count())
 
     def test_user_skills(self):
-        user1 = Project(name="connect")
-        user2 = Project(name="success")
+        user1 = User(username="connect")
+        user2 = User(username="success")
         s1 = Skill(name="python")
         s2 = Skill(name="sql")
 

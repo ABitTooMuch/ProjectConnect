@@ -1,8 +1,9 @@
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app import db
-from app.models.sql.attributes import Skill
-from app.models.sql.project import project_tags
+from app import db, login
+from app.models.attributes import Skill
+from app.models.project import Project
 
 contributions = db.Table('contributors',
     db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),
@@ -14,12 +15,12 @@ user_skills = db.Table('user_skills',
     db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'), primary_key=True)
 )
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
-    password = db.Column(db.String(128))
+    password_hash = db.Column(db.String(128))
     projects = db.relationship('Project', secondary=contributions, lazy='dynamic',
                                backref=db.backref('contributors', lazy='dynamic'))
     skills = db.relationship('Skill', secondary=user_skills, lazy='dynamic',
@@ -35,7 +36,7 @@ class User(db.Model):
 
     def add_skill(self, skill):
         if not self.has_skill(skill):
-            self.tags.append(skill)
+            self.skills.append(skill)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -59,3 +60,6 @@ class User(db.Model):
         return self.projects.filter(
             contributions.c.contributor_id == project.id).count() > 0
 
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))

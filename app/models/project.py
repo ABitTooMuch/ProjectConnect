@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from app import db
-from app.models.sql.attributes import Tag, Skill
+from app.models.attributes import Tag, Skill
 
 project_tags = db.Table('project_tags',
     db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),

@@ -1,2 +1,0 @@
-# todo: create an inheritance structure for projects and users so that attribute (skill, tag) code isn't repeated
-# todo: figure out inheritance so that attributes have the same base class but different tables
