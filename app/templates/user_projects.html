@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> Hi, {{current_user.username}}!</h1>
+    <h2>Projects</h2>
+    <div>
+
+        {% if current_user.projects.all()|length > 0 %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Description</th>
+            </tr>
+                {% for project in current_user.projects %}
+                <tr valign="top">
+                    <td><a href="{{ url_for( 'project', project_name=project.name) }}">{{project.name}}</a></td>
+                    <td>{{project.status}}</td>
+                    <td>{{project.description}}</td>
+                </tr>
+                {% endfor %}
+        </table>
+        <p><a href="{{ url_for('new_project') }}">New Project</a></p>
+        {% else %}
+            <p> No projects. <a href="{{ url_for('new_project') }}">Create One</a></p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> {{ project.name}}</h1>
+        <p>Status: {{project.status}}</p>
+        <p>Description:{{project.description}}</p>
+        <p><span>tags:
+            {% for tag in project.tags %}
+                {{tag}}
+            {% endfor %}
+        </span>  </p>
+        <h2>Contributors</h2>
+        <p> {% for contributor in project.contributors %}
+
+            {% endfor %}
+
+{% endblock %}

@@ -1,10 +1,12 @@
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import redirect
 
 from app import app, db
 from flask import render_template, flash, url_for
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, ProjectForm
+from app.models.project import Project
 from app.models.user import User
+
 
 @app.route('/')
 @app.route('/explore')
@@ -12,11 +14,43 @@ from app.models.user import User
 def explore():
     return render_template('explore.html', title='Explore')
 
-@app.route('/projects')
-def projects():
-    projects = [{"name":"success", "status":"active", "description":"hey, that's pretty  gud"},
-                     {"name": "connect", "status": "active", "description": "that's us"}]
-    return render_template('projects.html', title='My Projects', projects = projects)
+
+@app.route('/my_projects')
+@login_required
+def my_projects():
+    return render_template('user_projects.html', title='My Projects')
+
+
+@ app.route('/new_project', methods=['GET', 'POST'])
+@ login_required
+def new_project():
+
+    form = ProjectForm()
+    # if the form if the request has valid form data
+    if form.validate_on_submit():
+        project = Project(name=form.name.data, description = form.description.data)
+
+        db.session.add(project)
+        current_user.join_project(project)
+        db.session.commit()
+
+        return redirect(url_for('my_projects'))
+
+    return render_template('project_create.html', title='New Project', form=form)
+
+
+@app.route('/project/<project_name>')
+def project(project_name):
+    project = Project.query.filter_by(name=project_name).first_or_404()
+    return render_template('project.html', title=project_name, project=project)
+
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user.html', title='', user=user)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -35,12 +69,14 @@ def login():
         # redirect the user to a different page after login
         return redirect(url_for('explore'))
 
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('user_login.html', title='Sign In', form=form)
+
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('explore'))
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -55,4 +91,4 @@ def register():
         db.session.commit()
         flash("Successful Registration!")
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('user_registration.html', title='Register', form=form)

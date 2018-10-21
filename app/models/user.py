@@ -60,6 +60,7 @@ class User(UserMixin, db.Model):
         return self.projects.filter(
             contributions.c.contributor_id == project.id).count() > 0
 
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
