@@ -12,13 +12,13 @@ from app.models.user import User
 @app.route('/explore')
 @app.route('/index')
 def explore():
-    return render_template('explore.html', title='Explore')
+    return render_template('dev/explore.html', title='Explore')
 
 
 @app.route('/my_projects')
 @login_required
 def my_projects():
-    return render_template('user_projects.html', title='My Projects')
+    return render_template('dev/user_projects.html', title='My Projects')
 
 
 @ app.route('/new_project', methods=['GET', 'POST'])
@@ -36,20 +36,20 @@ def new_project():
 
         return redirect(url_for('my_projects'))
 
-    return render_template('project_create.html', title='New Project', form=form)
+    return render_template('dev/project_create.html', title='New Project', form=form)
 
 
 @app.route('/project/<project_name>')
 def project(project_name):
     project = Project.query.filter_by(name=project_name).first_or_404()
-    return render_template('project.html', title=project_name, project=project)
+    return render_template('dev/project.html', title=project_name, project=project)
 
 
 @app.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', title='', user=user)
+    return render_template('dev/user.html', title='', user=user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -69,7 +69,7 @@ def login():
         # redirect the user to a different page after login
         return redirect(url_for('explore'))
 
-    return render_template('user_login.html', title='Sign In', form=form)
+    return render_template('dev/user_login.html', title='Sign In', form=form)
 
 
 @app.route('/logout')
@@ -91,4 +91,4 @@ def register():
         db.session.commit()
         flash("Successful Registration!")
         return redirect(url_for('login'))
-    return render_template('user_registration.html', title='Register', form=form)
+    return render_template('dev/user_registration.html', title='Register', form=form)
