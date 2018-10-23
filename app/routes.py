@@ -39,10 +39,10 @@ def new_project():
     return render_template('dev/project_create.html', title='New Project', form=form)
 
 
-@app.route('/project/<project_name>')
-def project(project_name):
-    project = Project.query.filter_by(name=project_name).first_or_404()
-    return render_template('dev/project.html', title=project_name, project=project)
+@app.route('/project/<project_id>')
+def project(project_id):
+    project = Project.query.filter_by(id=project_id).first_or_404()
+    return render_template('dev/project.html', title=project.name, project=project)
 
 
 @app.route('/user/<username>')
@@ -73,6 +73,7 @@ def login():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('explore'))
@@ -92,3 +93,21 @@ def register():
         flash("Successful Registration!")
         return redirect(url_for('login'))
     return render_template('dev/user_registration.html', title='Register', form=form)
+
+
+@app.route('/like/<project_id>')
+@login_required
+def like_project(project_id):
+    project = Project.query.filter_by(id=project_id).first()
+    current_user.like_project(project)
+    db.session.commit()
+    return redirect(url_for('project', project_id=project.id))
+
+
+@app.route('/unlike/<project_id>')
+@login_required
+def unlike_project(project_id):
+    project = Project.query.filter_by(id=project_id).first()
+    current_user.unlike_project(project)
+    db.session.commit()
+    return redirect(url_for('project', project_id=project.id))

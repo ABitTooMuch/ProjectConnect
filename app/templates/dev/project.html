@@ -4,14 +4,33 @@
     <h1> {{ project.name}}</h1>
         <p>Status: {{project.status}}</p>
         <p>Description:{{project.description}}</p>
+        <p>Likes: {{project.likes()}}</p>
+        <p>Creation Date: {{project.creation_date}} </p>
+        <p>Last Update: {{project.last_update}} </p>
+
+        <form action="{{ url_for('like_project', project_id=project.id) }}" method="get">
+            <!--
+            {% if current_user.has_liked_project(project) %}
+            <input type="submit" name="Unlike" value="Unlike" />
+            {% else %}
+            <input type="submit" name="Like" value="Like" />
+            {% endif %}
+            -->
+            {% if current_user.has_liked_project(project) %}
+            <p><a href="{{ url_for('unlike_project', project_id=project.id) }}">Unlike</a></p>
+            {% else %}
+            <p><a href="{{ url_for('like_project', project_id=project.id) }}">Like</a></p>
+            {% endif %}
+        </form>
         <p><span>tags:
             {% for tag in project.tags %}
                 {{tag}}
             {% endfor %}
-        </span>  </p>
+        </span>
+
         <h2>Contributors</h2>
         <p> {% for contributor in project.contributors %}
-
+                {{contributor}}
             {% endfor %}
 
 {% endblock %}

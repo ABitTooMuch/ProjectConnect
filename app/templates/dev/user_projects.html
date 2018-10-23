@@ -10,12 +10,14 @@
             <tr>
                 <th>Name</th>
                 <th>Status</th>
+                <th>Likes</th>
                 <th>Description</th>
             </tr>
                 {% for project in current_user.projects %}
                 <tr valign="top">
-                    <td><a href="{{ url_for( 'project', project_name=project.name) }}">{{project.name}}</a></td>
+                    <td><a href="{{ url_for( 'project', project_id=project.id) }}">{{project.name}}</a></td>
                     <td>{{project.status}}</td>
+                    <td>{{project.likes()}}</td>
                     <td>{{project.description}}</td>
                 </tr>
                 {% endfor %}

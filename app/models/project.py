@@ -19,13 +19,17 @@ class Project(db.Model):
     name = db.Column(db.String(64))
     description = db.Column(db.String(1024))
     status = db.Column(db.String(64))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    creation_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    last_update = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     tags = db.relationship('Tag', secondary=project_tags, lazy='dynamic',
                            backref=db.backref('projects', lazy='dynamic'))
 
     skills = db.relationship('Skill', secondary=project_skills, lazy='dynamic',
                            backref=db.backref('projects', lazy='dynamic'))
+    # backrefs:
+    #   contributors
+    #   liked_by
 
     def has_tag(self, tag):
         return self.tags.filter(
@@ -50,6 +54,9 @@ class Project(db.Model):
     def add_skill(self, skill):
         if not self.has_skill(skill):
             self.skills.append(skill)
+
+    def likes(self):
+        return self.liked_by.count()
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)

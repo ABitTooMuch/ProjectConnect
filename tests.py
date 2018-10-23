@@ -31,9 +31,9 @@ class UserModelCase(unittest.TestCase):
         project2 = Project(name="success")
         db.session.add(user2)
         db.session.add(project2)
-        db.session.commit()
         user1.join_project(project2)
         user2.join_project(project1)
+        db.session.commit()
 
         self.assertEqual(2, user1.projects.count())
         self.assertEqual(2, project1.contributors.count())
@@ -117,6 +117,44 @@ class ProjectModelCase(unittest.TestCase):
         self.assertTrue(project1.has_skill_name(s1.name))
         self.assertFalse(project1.has_skill_name(s2.name))
         self.assertTrue(Skill.exists(s1.name))
+
+    def test_project_likes(self):
+        user1 = User(username="dimitri", email="pilodi2@gmail.com")
+        user2 = User(username="john", email="john123@gmail.com")
+        project1 = Project(name="connect")
+        project2 = Project(name="success")
+        db.session.add(user1)
+        db.session.add(user2)
+        db.session.add(project1)
+        db.session.add(project2)
+        db.session.commit()
+
+        # test user successfully likes project
+        user1.like_project(project1)
+        db.session.commit()
+        self.assertEqual(True, user1.has_liked_project(project1))
+
+        # test user can't like twice
+        user1.like_project(project1)
+        db.session.commit()
+        self.assertEqual(1, project1.likes())
+
+        # test user can successfully unlike project
+        user1.unlike_project(project1)
+        db.session.commit()
+        self.assertEqual(0, project1.likes())
+        self.assertEqual(False, user1.has_liked_project(project1))
+
+        # test multiple users can like the same project
+        user1.like_project(project1)
+        user2.like_project(project1)
+        db.session.commit()
+        self.assertEqual(2, project1.likes())
+
+        # test user can like multiple projects
+        user1.like_project(project2)
+        db.session.commit()
+        self.assertEqual(2, user1.projects_liked.count())
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

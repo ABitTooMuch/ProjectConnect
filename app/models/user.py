@@ -1,9 +1,10 @@
+from datetime import datetime
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
 from app.models.attributes import Skill
-from app.models.project import Project
 
 contributions = db.Table('contributors',
     db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),
@@ -15,16 +16,24 @@ user_skills = db.Table('user_skills',
     db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'), primary_key=True)
 )
 
+project_likes = db.Table('project_likes',
+    db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
+)
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    date_joined = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     projects = db.relationship('Project', secondary=contributions, lazy='dynamic',
                                backref=db.backref('contributors', lazy='dynamic'))
     skills = db.relationship('Skill', secondary=user_skills, lazy='dynamic',
                              backref=db.backref('users', lazy='dynamic'))
+    projects_liked = db.relationship('Project', secondary=project_likes, lazy='dynamic',
+                                     backref=db.backref('liked_by', lazy='dynamic'))
 
     def has_skill(self, skill):
         return self.skills.filter(
@@ -41,16 +50,12 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
-    # hash and salt password
+    # hash and salt password and store the hash
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-    def join_project(self, project):
-        if not self.is_contributor(project):
-            self.projects.append(project)
 
     def leave_project(self, project):
         if self.is_contributor(project):
@@ -59,6 +64,22 @@ class User(UserMixin, db.Model):
     def is_contributor(self, project):
         return self.projects.filter(
             contributions.c.contributor_id == project.id).count() > 0
+
+    def join_project(self, project):
+        if not self.has_liked_project(project):
+            self.projects.append(project)
+
+    def has_liked_project(self, project):
+        return self.projects_liked.filter(
+            project_likes.c.project_id == project.id).count() > 0
+
+    def like_project(self, project):
+        if not self.has_liked_project(project):
+            self.projects_liked.append(project)
+
+    def unlike_project(self, project):
+        if self.has_liked_project(project):
+            self.projects_liked.remove(project)
 
 
 @login.user_loader
