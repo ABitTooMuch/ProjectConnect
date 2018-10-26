@@ -8,20 +8,18 @@
         <p>Creation Date: {{project.creation_date}} </p>
         <p>Last Update: {{project.last_update}} </p>
 
-        <form action="{{ url_for('like_project', project_id=project.id) }}" method="get">
-            <!--
+        <!--<form action="{{ url_for('like_project', project_id=project.id) }}" method="post">
             {% if current_user.has_liked_project(project) %}
             <input type="submit" name="Unlike" value="Unlike" />
             {% else %}
             <input type="submit" name="Like" value="Like" />
             {% endif %}
-            -->
-            {% if current_user.has_liked_project(project) %}
-            <p><a href="{{ url_for('unlike_project', project_id=project.id) }}">Unlike</a></p>
-            {% else %}
-            <p><a href="{{ url_for('like_project', project_id=project.id) }}">Like</a></p>
-            {% endif %}
-        </form>
+        </form>-->
+        {% if current_user.has_liked_project(project) %}
+        <p><a href="{{ url_for('unlike_project', project_id=project.id) }}">Unlike</a></p>
+        {% else %}
+        <p><a href="{{ url_for('like_project', project_id=project.id) }}">Like</a></p>
+        {% endif %}
         <p><span>tags:
             {% for tag in project.tags %}
                 {{tag}}
