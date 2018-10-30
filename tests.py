@@ -1,7 +1,7 @@
 import unittest
 
 from app import app, db
-from app.models.attributes import Tag, Skill
+from app.models.tables import Tag, Skill
 from app.models.project import Project
 from app.models.user import User
 

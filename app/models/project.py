@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from app import db
-from app.models.attributes import Tag, Skill
+from app.models.tables import Tag, Skill, project_requests
 
 project_tags = db.Table('project_tags',
     db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),
@@ -26,7 +26,11 @@ class Project(db.Model):
                            backref=db.backref('projects', lazy='dynamic'))
 
     skills = db.relationship('Skill', secondary=project_skills, lazy='dynamic',
-                           backref=db.backref('projects', lazy='dynamic'))
+                             backref=db.backref('projects', lazy='dynamic'))
+
+    membership_requests = db.relationship('User', secondary=project_requests, lazy='dynamic',
+                                          backref=db.backref('membership_requests', lazy='dynamic'))
+
     # backrefs:
     #   contributors
     #   liked_by
@@ -57,6 +61,9 @@ class Project(db.Model):
 
     def likes(self):
         return self.liked_by.count()
+
+    def requests(self):
+        return self.membership_requests.all()
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)

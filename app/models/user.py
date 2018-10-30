@@ -4,22 +4,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
-from app.models.attributes import Skill
-
-contributions = db.Table('contributors',
-    db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),
-    db.Column('contributor_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
-)
-
-user_skills = db.Table('user_skills',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'), primary_key=True)
-)
-
-project_likes = db.Table('project_likes',
-    db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
-)
+from app.models.tables import Skill, contributions, user_skills, project_likes
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -34,6 +19,9 @@ class User(UserMixin, db.Model):
                              backref=db.backref('users', lazy='dynamic'))
     projects_liked = db.relationship('Project', secondary=project_likes, lazy='dynamic',
                                      backref=db.backref('liked_by', lazy='dynamic'))
+
+    # backrefs
+    #   membership_requests
 
     def has_skill(self, skill):
         return self.skills.filter(

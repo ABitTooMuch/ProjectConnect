@@ -1,0 +1,16 @@
+{% extends "dev/base.html" %}
+
+{% block content %}
+    <h1> {{ user.username}}</h1>
+    <p>Join Date: {{user.date_joined}}</p>
+
+    <p><span>skills:
+        {% for skill in user.skills %}
+            {{skill}}
+        {% endfor %}
+    </span></p>
+
+    <h2>Projects</h2>
+    {% include "dev/_project_list.html" %}
+
+{% endblock %}
