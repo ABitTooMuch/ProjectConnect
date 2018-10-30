@@ -6,8 +6,8 @@
 
     {% if current_user.projects.all()|length > 0 %}
         {% include "dev/_project_list.html" %}
-        <p><a href="{{ url_for('new_project') }}">New Project</a></p>
+        <p><a href="{{ url_for('main.new_project') }}">New Project</a></p>
     {% else %}
-        <p> No projects. <a href="{{ url_for('new_project') }}">Create One</a></p>
+        <p> No projects. <a href="{{ url_for('main.new_project') }}">Create One</a></p>
     {% endif %}
 {% endblock %}
