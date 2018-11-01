@@ -35,11 +35,18 @@
     $ flask db upgrade
     ```
     
+
 6. Start the service
 
     ```
     $ projectconnect.py
     ```
+
+    Mac OS (Terminal)
+    ```
+    $ python projectconnect.py
+    ```
+
 
 7. Navigate to http://localhost:4000 in your browser
 
