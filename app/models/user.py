@@ -4,7 +4,9 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login
-from app.models.tables import Skill, contributions, user_skills, project_likes
+from app.models.tables import contributions, user_skills, project_likes
+from app.models.attributes import Skill
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
