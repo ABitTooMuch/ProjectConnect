@@ -38,11 +38,12 @@
 
 6. Start the service
 
+    Windows
     ```
     $ projectconnect.py
     ```
 
-    Mac OS (Terminal)
+    Linux/Unix
     ```
     $ python projectconnect.py
     ```
