@@ -23,7 +23,7 @@
 
     <h2>Contributors</h2>
     <p> {% for contributor in project.contributors %}
-            <a href="{{ url_for( 'main.user', username=contributor.username) }}">{{contributor.username}}</a>
+            <a href="{{ url_for( 'dev.user', username=contributor.username) }}">{{contributor.username}}</a>
         {% endfor %}
 
 {% endblock %}

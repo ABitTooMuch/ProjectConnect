@@ -7,7 +7,7 @@
     </tr>
         {% for project in projects %}
         <tr valign="top">
-            <td><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
+            <td><a href="{{ url_for( 'dev.project', project_id=project.id) }}">{{project.name}}</a></td>
             <td>{{project.status}}</td>
             <td>{{project.likes()}}</td>
             <td>{{project.description}}</td>

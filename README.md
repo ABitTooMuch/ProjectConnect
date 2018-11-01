@@ -46,18 +46,23 @@
 ## Project Structure
 
     ProjectConnect/
-        auth/ - contains code and routes (not templates) related to login and authentication
-            forms.py
-            routes.py
-        main/ - contains all the main site logic and endpoints
-            forms.py
-            routes.py
-        models/ - contains all of the database models
-            user.py - contains user model
-            project.py - contains project model
-            tables.py - contains relational tables
-            attributes.py - attributes like tags and skills
-        templates/ - contains the templates for all pages
-        static/ (Non-existent) - this is where all static content (images, js, css) for templates should go
+        app/
+            auth/ - contains code and routes (not templates) related to login and authentication
+                forms.py
+                routes.py
+            main/ - contains all the main site logic and endpoints
+                forms.py
+                routes.py
+            dev/ - development version of the site
+            models/ - contains all of the database models
+                user.py - contains user model
+                project.py - contains project model
+                tables.py - contains relational tables
+                attributes.py - attributes like tags and skills
+            templates/ - contains the templates for all pages
+                dev/ - templates only used for backend develeopment
+            static/ (Non-existent) - this is where all static content (images, js, css) for templates should go
         migrations/ - automatically created; database table information
         projectconnect.py - entrypoint for the project. Run this to start the service
+        tests.py - unit tests
+        config.py - configuration variables for the project
