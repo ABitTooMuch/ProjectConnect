@@ -43,7 +43,7 @@
     $ projectconnect.py
     ```
 
-    Linux/Unix
+    Linux/Unix/Windows
     ```
     $ python projectconnect.py
     ```
