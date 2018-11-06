@@ -38,11 +38,12 @@
 
 6. Start the service
 
+    Windows
     ```
     $ projectconnect.py
     ```
 
-    Mac OS (Terminal)
+    Linux/Unix/Windows
     ```
     $ python projectconnect.py
     ```
@@ -73,3 +74,11 @@
         projectconnect.py - entrypoint for the project. Run this to start the service
         tests.py - unit tests
         config.py - configuration variables for the project
+
+## Learning Resources
+
+* Flask Mega Tutorial [Class](https://www.udemy.com/flask-mega-tutorial/) and [Blog](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+* [Flask Documentation](http://flask.pocoo.org/)
+* [Flask-SQLAlchemy Docs (Database)](http://flask-sqlalchemy.pocoo.org/2.3/)
+* [Web Developer's Bootcamp (HTML, CSS, JS, Bootstrap)](https://www.udemy.com/the-web-developer-bootcamp/)
+Let me know if you need the login and password for the udemy classes
