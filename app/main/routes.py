@@ -11,7 +11,7 @@ from app.models.user import User
 
 
 @bp.route('/')
-@bp.route('/explore')
+@bp.route('/home')
 @bp.route('/index')
 def explore():
     items_per_page = request.args.get('items_per_page', current_app.config['DEFAULT_ITEMS_PER_PAGE'], type=int)

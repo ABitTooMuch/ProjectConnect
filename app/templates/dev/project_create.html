@@ -1,6 +1,9 @@
-{% extends "dev/base.html" %}
+{% extends "nav_bar2(demo).html" %}
 
 {% block content %}
+    <head>
+        <title>Project_Create</title>
+    </head>
     <h1>New Project </h1>
     <form action="" method ="post">
         {{ form.hidden_tag() }} <!-- csrf protection token (hidden field added to form for token) -->

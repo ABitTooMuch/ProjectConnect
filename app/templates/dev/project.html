@@ -1,7 +1,10 @@
-{% extends "dev/base.html" %}
+{% extends "nav_bar2(demo).html" %}
 
 {% block content %}
-    <h1> {{ project.name}}</h1>
+    <div class="jumbotron">
+        <h1> {{ project.name}}</h1>
+    </div>
+
     <p>Join Date: {{project.status}}</p>
     <p>Description:{{project.description}}</p>
     <p>Likes: {{project.likes()}}</p>
@@ -27,3 +30,4 @@
         {% endfor %}
 
 {% endblock %}
+
