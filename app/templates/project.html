@@ -1,7 +1,10 @@
-{% extends "dev/base.html" %}
+{% extends "nav_bar2(demo).html" %}
 
 {% block content %}
-    <h1> {{ project.name}}</h1>
+    <div class="jumbotron">
+        <h1> {{ project.name}}</h1>
+    </div>
+
     <p>Join Date: {{project.status}}</p>
     <p>Description:{{project.description}}</p>
     <p>Likes: {{project.likes()}}</p>
@@ -23,7 +26,8 @@
 
     <h2>Contributors</h2>
     <p> {% for contributor in project.contributors %}
-            <a href="{{ url_for( 'dev.user', username=contributor.username) }}">{{contributor.username}}</a>
+            <a href="{{ url_for( 'main.user', username=contributor.username) }}">{{contributor.username}}</a>
         {% endfor %}
 
 {% endblock %}
+

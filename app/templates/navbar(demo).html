@@ -54,17 +54,17 @@
         -->
             {% if current_user.is_anonymous %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('dev.login') }}">Login</a>
+                  <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('dev.user', username=current_user.username) }}">My Profile</a>
+                  <a class="nav-link" href="{{ url_for('main.user', username=current_user.username) }}">My Profile</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('dev.my_projects') }}">My Project</a>
+                  <a class="nav-link" href="{{ url_for('main.my_projects') }}">My Project</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('dev.logout') }}">Logout</a>
+                  <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>
             {% endif %}
         </ul>

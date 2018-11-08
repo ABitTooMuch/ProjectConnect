@@ -35,7 +35,7 @@
       <div class="my-3 p-3 bg-white rounded shadow-sm">
         <div class="media text-muted pt-3">     
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark"> <a class="d-block text-gray-dark" href="{{ url_for( 'dev.project', project_id=project.id) }}"><b><i><font size="4">{{project.name}}</font></i></b></a><span style="float: right"></span></strong>
+            <strong class="d-block text-gray-dark"> <a class="d-block text-gray-dark" href="{{ url_for( 'main.project', project_id=project.id) }}"><b><i><font size="4">{{project.name}}</font></i></b></a><span style="float: right"></span></strong>
             <strong class="d-block text-gray-dark"><b>Status: </b></strong>{{project.status}} 
             <strong class="d-block text-gray-dark"><b>Like: </b></strong>{{project.likes()}} 
             <strong class="d-block text-gray-dark"><b>Description: </b></strong>{{project.description}} 

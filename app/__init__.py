@@ -25,10 +25,10 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
-    from app.main import bp as main_bp
-    app.register_blueprint(main_bp)
-
     from app.dev import bp as dev_bp
     app.register_blueprint(dev_bp, url_prefix='/dev')
+    
+    from app.main import bp as main_bp
+    app.register_blueprint(main_bp)
 
     return app

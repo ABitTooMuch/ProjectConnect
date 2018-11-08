@@ -25,7 +25,7 @@ def login():
         # redirect the user to a different page after login
         return redirect(url_for('main.explore'))
 
-    return render_template('dev/user_login.html', title='Sign In', form=form)
+    return render_template('user_login.html', title='Sign In', form=form)
 
 
 @bp.route('/logout')
@@ -48,4 +48,4 @@ def register():
         db.session.commit()
         flash("Successful Registration!")
         return redirect(url_for('auth.login'))
-    return render_template('dev/user_registration.html', title='Register', form=form)
+    return render_template('user_registration.html', title='Register', form=form)

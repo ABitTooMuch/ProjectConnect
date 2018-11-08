@@ -21,7 +21,7 @@ def explore():
     prev_url = url_for('main.explore', page=projects.prev_num) if projects.has_prev else None
     print(projects.has_next)
     print(next_url)
-    return render_template('dev/explore.html', title='Explore', projects=projects.items,
+    return render_template('explore.html', title='Explore', projects=projects.items,
                            next_url=next_url, prev_url=prev_url)
 
 
@@ -33,7 +33,7 @@ def my_projects():
     projects = current_user.projects.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
     next_url = url_for('main.my_projects', page=projects.next_num) if projects.has_next else None
     prev_url = url_for('main.my_projects', page=projects.prev_num) if projects.has_prev else None
-    return render_template('dev/user_projects.html', title='My Projects', projects=projects.items,
+    return render_template('user_projects.html', title='My Projects', projects=projects.items,
                            next_url=next_url, prev_url=prev_url)
 
 
@@ -51,13 +51,13 @@ def new_project():
 
         return redirect(url_for('main.my_projects'))
 
-    return render_template('main/project_create.html', title='New Project', form=form)
+    return render_template('project_create.html', title='New Project', form=form)
 
 
 @bp.route('/project/<project_id>')
 def project(project_id):
     project = Project.query.filter_by(id=project_id).first_or_404()
-    return render_template('dev/project.html', title=project.name, project=project)
+    return render_template('project.html', title=project.name, project=project)
 
 
 @bp.route('/user/<username>')
@@ -69,7 +69,7 @@ def user(username):
     projects = user.projects.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
     next_url = url_for('main.user', username=username, page=projects.next_num) if projects.has_next else None
     prev_url = url_for('main.user', username=username, page=projects.prev_num) if projects.has_prev else None
-    return render_template('dev/user.html', title=username, user=user, projects=projects.items,
+    return render_template('user.html', title=username, user=user, projects=projects.items,
                            next_url=next_url, prev_url=prev_url)
 
 
