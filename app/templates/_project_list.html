@@ -1,18 +1,22 @@
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Likes</th>
-        <th>Description</th>
-    </tr>
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Likes</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for project in projects %}
-        <tr valign="top">
-            <td><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
+        <tr>
+            <td scope="row"><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
             <td>{{project.status}}</td>
             <td>{{project.likes()}}</td>
             <td>{{project.description}}</td>
         </tr>
         {% endfor %}
+    </tbody>
 </table>
 {% if prev_url %}
 <a href="{{ prev_url }}">Previous</a>
