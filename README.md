@@ -78,6 +78,7 @@
 ## Learning Resources
 
 * Flask Mega Tutorial [Class](https://www.udemy.com/flask-mega-tutorial/) and [Blog](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+* [Amazing Github Tutorial](https://learngitbranching.js.org/)
 * [Flask Documentation](http://flask.pocoo.org/)
 * [Flask-SQLAlchemy Docs (Database)](http://flask-sqlalchemy.pocoo.org/2.3/)
 * [Web Developer's Bootcamp (HTML, CSS, JS, Bootstrap)](https://www.udemy.com/the-web-developer-bootcamp/)
