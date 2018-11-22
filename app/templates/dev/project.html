@@ -20,6 +20,12 @@
             {{tag}}
         {% endfor %}
     </span>
+    {% if current_user.is_authenticated %}
+        {% if current_user in project.contributors %}
+            <a href="{{ url_for( 'dev.edit_project', project_id=project.id) }}">Edit</a>
+        {% endif %}
+    {% endif %}
+
 
     <h2>Contributors</h2>
     <p> {% for contributor in project.contributors %}

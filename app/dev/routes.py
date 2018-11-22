@@ -5,7 +5,7 @@ from werkzeug.utils import redirect
 
 from app import db
 from app.dev import bp
-from app.dev.forms import LoginForm, RegistrationForm, ProjectForm
+from app.dev.forms import LoginForm, RegistrationForm, ProjectForm, EditProject
 from app.models.project import Project
 from app.models.user import User
 
@@ -22,10 +22,10 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('dev.login'))
         login_user(user, remember=form.remember_me.data)
         # redirect the user to a different page after login
-        return redirect(url_for('main.explore'))
+        return redirect(url_for('dev.explore'))
 
     return render_template('dev/user_login.html', title='Sign In', form=form)
 
@@ -49,7 +49,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash("Successful Registration!")
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('dev.login'))
     return render_template('signup(demo).html', title='Register', form=form)
 
 
@@ -132,3 +132,20 @@ def unlike_project(project_id):
     current_user.unlike_project(project)
     db.session.commit()
     return redirect(url_for('dev.project', project_id=project.id))
+
+@ bp.route('/edit_project/<project_id>', methods=['GET', 'POST'])
+@ login_required
+def edit_project(project_id):
+    form = EditProject()
+    # if the form has valid form data
+    if form.validate_on_submit():
+        project = Project.query.filter_by(id=project_id).first()
+        project.name = form.name.data;
+        project.description = form.description.data
+
+        db.session.add(project)
+        db.session.commit()
+
+        return redirect(url_for('dev.my_projects'))
+
+    return render_template('dev/project_edit.html', title='Edit Project', form=form)

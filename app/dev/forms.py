@@ -35,3 +35,10 @@ class ProjectForm(FlaskForm):
     #tags = StringField('tags', validators=[])
     #skills = StringField('skills', validators=[])
     submit = SubmitField('Create')
+
+class EditProject(FlaskForm):
+    name = StringField('Name')
+    description = TextAreaField('Description')
+    #tags = StringField('tags', validators=[])
+    #skills = StringField('skills', validators=[])
+    submit = SubmitField('Create')
