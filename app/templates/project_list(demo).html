@@ -29,30 +29,32 @@
     }
   </style>
 <body>
-  {% for project in projects %}
-    <main role="main" class="container">
-
-      <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <div class="media text-muted pt-3">     
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark"> <a class="d-block text-gray-dark" href="{{ url_for( 'main.project', project_id=project.id) }}"><b><i><font size="4">{{project.name}}</font></i></b></a><span style="float: right"></span></strong>
-            <strong class="d-block text-gray-dark"><b>Status: </b></strong>{{project.status}} 
-            <strong class="d-block text-gray-dark"><b>Like: </b></strong>{{project.likes()}} 
-            <strong class="d-block text-gray-dark"><b>Description: </b></strong>{{project.description}} 
-          </p>
-        </div>
-        
-      </div>
-    </main>
-  {% endfor %}
-  <div align="center"><u>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Likes</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td scope="row"><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
+                <td>{{project.status}}</td>
+                <td>{{project.likes()}}</td>
+                <td>{{project.description}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% if prev_url %}
     <a href="{{ prev_url }}">Previous</a>
     {% endif %}
     {% if next_url %}
     <a href="{{ next_url }}">Next</a>
-    {% endif %}
-  </u></div>
+    {% endif %} 
 </body>
     <!-- Bootstrap core JavaScript
     ================================================== -->
