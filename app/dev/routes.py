@@ -1,14 +1,18 @@
-from flask import url_for, flash, render_template, request, current_app
+from flask import url_for, flash, render_template, request, current_app, g
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import redirect
 
 
 from app import db
 from app.dev import bp
-from app.dev.forms import LoginForm, RegistrationForm, ProjectForm, EditProject
+from app.dev.forms import LoginForm, RegistrationForm, ProjectForm, EditProject, SearchForm
 from app.models.project import Project
 from app.models.user import User
 
+
+@bp.before_app_request
+def before_request():
+    g.search_form = SearchForm()
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,7 +54,7 @@ def register():
         db.session.commit()
         flash("Successful Registration!")
         return redirect(url_for('dev.login'))
-    return render_template('user_registration.html', title='Register', form=form)
+    return render_template('dev/user_registration.html', title='Register', form=form)
 
 
 @bp.route('/')
@@ -62,8 +66,6 @@ def explore():
     projects = Project.query.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
     next_url = url_for('dev.explore', page=projects.next_num) if projects.has_next else None
     prev_url = url_for('dev.explore', page=projects.prev_num) if projects.has_prev else None
-    print(projects.has_next)
-    print(next_url)
     return render_template('dev/explore.html', title='Explore', projects=projects.items,
                            next_url=next_url, prev_url=prev_url)
 
@@ -133,6 +135,7 @@ def unlike_project(project_id):
     db.session.commit()
     return redirect(url_for('dev.project', project_id=project.id))
 
+
 @ bp.route('/edit_project/<project_id>', methods=['GET', 'POST'])
 @ login_required
 def edit_project(project_id):
@@ -149,3 +152,16 @@ def edit_project(project_id):
         return redirect(url_for('dev.my_projects'))
 
     return render_template('dev/project_edit.html', title='Edit Project', form=form)
+
+@ bp.route('/search')
+def search():
+
+    items_per_page = request.args.get('items_per_page', current_app.config['DEFAULT_ITEMS_PER_PAGE'], type=int)
+    page_no = request.args.get('page', 1, type=int)
+    projects, total = Project.search(g.search_form.q.data, page_no, items_per_page)
+    next_url = url_for('dev.search', q=g.search_form.q.data, page=page_no + 1) \
+        if total > page_no * items_per_page else None
+    prev_url = url_for('dev.search', q=g.search_form.q.data, page=page_no - 1) \
+        if page_no > 1 else None
+    return render_template('dev/search.html', title='Search', projects=projects,
+                           next_url=next_url, prev_url=prev_url)

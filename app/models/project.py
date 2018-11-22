@@ -1,11 +1,13 @@
 from datetime import datetime
 
 from app import db
+from app.common.searchable import SearchableMixin
 from app.models.tables import project_requests, project_tags, project_skills
 from app.models.attributes import Tag, Skill
 
 
-class Project(db.Model):
+class Project(db.Model, SearchableMixin):
+    __searchable__ = ['name', 'description']
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))

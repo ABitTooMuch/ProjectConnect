@@ -11,6 +11,11 @@
     <div>
     Microblog:
         <a href="{{ url_for('dev.explore') }}">Explore</a>
+        <form class="" method="get" action="{{ url_for('dev.search') }}">
+        <div class="form-group">
+            {{ g.search_form.q(size=20, class='form-control', placeholder=g.search_form.q.label.text) }}
+        </div>
+        </form>
     {% if current_user.is_anonymous %}
         <a href="{{ url_for('dev.login') }}">Login</a>
     {% else %}
