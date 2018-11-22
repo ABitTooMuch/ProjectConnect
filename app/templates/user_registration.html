@@ -1,37 +1,63 @@
-{% extends "dev/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign Up </h1>
-    <form action="" method ="post">
-        {{ form.hidden_tag() }} <!-- csrf protection token (hidden field added to form for token) -->
-        <p>
-            {{ form.username.label }}:<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-            <span style="color: red;"> {{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label}}:<br>
-            {{ form.email(size=32) }}
-            {% for error in form.email.errors %}
-            <span style="color: red;"> {{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label}}:<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <span style="color: red;"> {{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password2.label}}:<br>
-            {{ form.password2(size=32) }}
-            {% for error in form.password2.errors %}
-            <span style="color: red;"> {{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+
+<div class="container-fluid">
+    <div class="container">
+        <h2 class="text-center" id="title">Project Connect</h2>
+        <hr>
+        <div class="row">
+            <div class="col-md-5">
+                <form role="form" action="" method="post">
+                    <fieldset>
+                        <form action="" method="post">
+                            {{ form.hidden_tag() }}
+                            <!-- csrf protection token (hidden field added to form for token) -->
+                            <p>
+                                {{ form.username.label }}:<br>
+                                {{ form.username(size=32) }}
+                                {% for error in form.username.errors %}
+                                <span style="color: red;"> {{ error }}</span>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                {{ form.email.label}}:<br>
+                                {{ form.email(size=32) }}
+                                {% for error in form.email.errors %}
+                                <span style="color: red;"> {{ error }}</span>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                {{ form.password.label}}:<br>
+                                {{ form.password(size=32) }}
+                                {% for error in form.password.errors %}
+                                <span style="color: red;"> {{ error }}</span>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                {{ form.password2.label}}:<br>
+                                {{ form.password2(size=32) }}
+                                {% for error in form.password2.errors %}
+                                <span style="color: red;"> {{ error }}</span>
+                                {% endfor %}
+                            </p>
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                By Clicking register you're agree to our <a href="">policy & terms</a>
+                            </label>
+
+                            <p>{{ form.submit() }}</p>
+                        </form>
+
+
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="col-md-2">
+                <!-------null------>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

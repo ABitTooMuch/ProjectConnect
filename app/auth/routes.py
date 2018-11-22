@@ -48,4 +48,4 @@ def register():
         db.session.commit()
         flash("Successful Registration!")
         return redirect(url_for('auth.login'))
-    return render_template('signup(demo).html', title='Register', form=form)
+    return render_template('user_registration.html', title='Register', form=form)

@@ -1,16 +1,16 @@
-{% extends "nav_bar2(demo).html" %}
+{% extends "base.html" %}
 
 {% block content %}
-    <head>
-        <title>My Project</title>
-    </head>
-    <h1> Hi, {{current_user.username}}!</h1>
-    <h2>Projects</h2>
 
-    {% if current_user.projects.all()|length > 0 %}
-        {% include "_project_list.html" %}
-        <p><a href="{{ url_for('main.new_project') }}">New Project</a></p>
-    {% else %}
-        <p> No projects. <a href="{{ url_for('main.new_project') }}">Create One</a></p>
-    {% endif %}
+<h1> Hi, {{current_user.username}}!</h1>
+
+<h2>Projects</h2>
+
+{% if current_user.projects.all()|length > 0 %}
+{% include "_project_list.html" %}
+<p><a href="{{ url_for('main.new_project') }}">New Project</a></p>
+{% else %}
+<p> No projects. <a href="{{ url_for('main.new_project') }}">Create One</a></p>
+{% endif %}
+
 {% endblock %}

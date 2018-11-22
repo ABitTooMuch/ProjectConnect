@@ -2,13 +2,18 @@ from flask_login import current_user, login_required
 from werkzeug.utils import redirect
 
 from app import db
-from flask import render_template, url_for, request, current_app
+from flask import render_template, url_for, request, current_app, g
 
+from app.dev.forms import SearchForm
 from app.main import bp
 from app.main.forms import ProjectForm
 from app.models.project import Project
 from app.models.user import User
 
+
+@bp.before_app_request
+def before_request():
+    g.search_form = SearchForm()
 
 @bp.route('/')
 @bp.route('/home')
@@ -89,3 +94,16 @@ def unlike_project(project_id):
     current_user.unlike_project(project)
     db.session.commit()
     return redirect(url_for('main.project', project_id=project.id))
+
+@ bp.route('/search')
+def search():
+
+    items_per_page = request.args.get('items_per_page', current_app.config['DEFAULT_ITEMS_PER_PAGE'], type=int)
+    page_no = request.args.get('page', 1, type=int)
+    projects, total = Project.search(g.search_form.q.data, page_no, items_per_page)
+    next_url = url_for('main.search', q=g.search_form.q.data, page=page_no + 1) \
+        if total > page_no * items_per_page else None
+    prev_url = url_for('main.search', q=g.search_form.q.data, page=page_no - 1) \
+        if page_no > 1 else None
+    return render_template('search.html', title='Search', projects=projects,
+                           next_url=next_url, prev_url=prev_url)
