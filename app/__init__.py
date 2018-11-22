@@ -27,8 +27,12 @@ def create_app(config_class=Config):
 
     from app.dev import bp as dev_bp
     app.register_blueprint(dev_bp, url_prefix='/dev')
+
+    from app.api import bp as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
     
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
 
     return app
