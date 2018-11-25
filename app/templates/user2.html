@@ -1,0 +1,58 @@
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="../static/css/user2.css">
+{% endblock %}
+
+{% block content %}
+<h3 class="headalign">User Profile Card with Left Photo</h3>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-12">
+     <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+            <div class="card-block">
+			  <div class="row">
+			  <div class="col-md-4 col-sm-4 text-center">
+					<img src="assets/images/card-image.png" alt="" class="btn-md">
+				</div>
+				<div class="col-md-8 col-sm-8">
+					<h2 class="card-title">Name: {{ user.username }}</h2>
+					<p class="card-text"><strong>Major: </strong> {{ user.major }} </p>
+					<p class="card-text"><strong>Skills: </strong> Theme, plugin and website development </p>
+					<p><strong>Platform: </strong>
+						<span class="badge bg-primary">WordPress</span>
+						<span class="badge bg-info">Weebly</span>
+						<span class="badge bg-warning">Bootstrap</span>
+						<span class="badge bg-success">Wix</span>
+					</p>
+				</div>
+				<div class="col-md-4 col-sm-4 text-center">
+					<h2><strong> 5.2K </strong></h2>
+					<p><small>Fans</small></p>
+					<button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Like  </button>
+				</div>
+				<div class="col-md-4 col-sm-4 text-center">
+					<h2><strong>1.4K</strong></h2>
+					<p><small>Following</small></p>
+					<button class="btn btn-success btn-block btn-md"><span class="fa fa-twitter-square"></span> Tweet </button>
+				</div>
+				<div class="col-md-4 col-sm-4 text-center">
+					<h2><strong>3.8K</strong></h2>
+					<p><small>Followers</small></p>
+					<button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Follow </button>
+				</div>
+			  </div>
+              </div>
+          </div>
+    </div>
+  </div>
+</div>
+<hr class="my-5">
+<!-- End Content -->
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+{% endblock %}

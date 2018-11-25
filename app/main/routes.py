@@ -107,3 +107,22 @@ def search():
         if page_no > 1 else None
     return render_template('search.html', title='Search', projects=projects,
                            next_url=next_url, prev_url=prev_url)
+
+@ bp.route('/project2')
+def profile2():
+    return render_template('project2.html')
+
+@ bp.route('/user2/<username>')
+def user2(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user2.html', user=user)
+
+@ bp.route('/joey/<username>')
+def joey(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('joey.html', user=user)
+
+@ bp.route('/user3/<username>')
+def user3(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user3.html', user=user)

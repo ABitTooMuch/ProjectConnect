@@ -17,23 +17,14 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../static/Navbar Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../static/Navbar Template for Bootstrap_files/navbar.css" rel="stylesheet">
-
-    <!-- Bootstrap core CSS -->
+    <link href="../static/Floating labels for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
     <link href="../static/Offcanvas template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <link href="../static/Navbar Template for Bootstrap_files/navbar.css" rel="stylesheet">
+    <link href="../static/Floating labels for Bootstrap_files/offcanvas.css" rel="stylesheet">
     <link href="../static/Offcanvas template for Bootstrap_files/offcanvas.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="../static/Floating labels for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../static/Floating labels for Bootstrap_files/offcanvas.css" rel="stylesheet">
-
-    <link href="../static/css/styles.css" rel="stylesheet">
+    <link href="../static/css/base.css" rel="stylesheet">
 
     {% block head %}
     {% endblock %}
@@ -61,14 +52,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.explore') }}">Home</a>
-                    <!-- <a class="nav-link" href="explore(demo).htm">Home</a> -->
                 </li>
-                <!--
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">AboutUs</a>
-                    </li>
-
-                -->
                 {% if current_user.is_anonymous %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
@@ -92,7 +76,6 @@
 
 
 <!-- main content -->
-</div>
 <main role="main" class="container">
 
     <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -123,7 +106,10 @@
         crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="../static/Navbar Template for Bootstrap_files/popper.min.js"></script>
-<script src="../static/Navbar Template for Bootstrap_files/bootstrap.min.js"></script><script src="../static/Navbar Template for Bootstrap_files/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="../static/Navbar Template for Bootstrap_files/bootstrap.min.js"></script>
+<script src="../static/Navbar Template for Bootstrap_files/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
 <script src="../static/Clean Blog - Start Bootstrap Theme_files/jquery.min.js"></script>
 <script src="../static/Clean Blog - Start Bootstrap Theme_files/bootstrap.bundle.min.js"></script>
 <script src="../static/Clean Blog - Start Bootstrap Theme_files/clean-blog.min.js"></script>
