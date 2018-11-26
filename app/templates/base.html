@@ -16,18 +16,21 @@
     <link rel="icon" href="../static/pictures/Logo.PNG">
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/Navbar Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/Floating labels for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/Offcanvas template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+    {{ moment.include_jquery() }}
+    {{ moment.include_moment() }}
 
-    <link href="../static/Navbar Template for Bootstrap_files/navbar.css" rel="stylesheet">
-    <link href="../static/Floating labels for Bootstrap_files/offcanvas.css" rel="stylesheet">
-    <link href="../static/Offcanvas template for Bootstrap_files/offcanvas.css" rel="stylesheet">
+    <link href="../static/vendor/Floating labels for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendor/Offcanvas template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendor/Navbar Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../static/vendor/Floating labels for Bootstrap_files/floating-labels.css" rel="stylesheet">
+    <link href="../static/vendor/Offcanvas template for Bootstrap_files/offcanvas.css" rel="stylesheet">
+    <link href="../static/vendor/Navbar Template for Bootstrap_files/navbar.css" rel="stylesheet">
+
+    {% block head %}{% endblock %}
 
     <link href="../static/css/base.css" rel="stylesheet">
 
-    {% block head %}
-    {% endblock %}
 
 </head>
 <body>
@@ -101,18 +104,15 @@
 <!-- Placed at the end of the document so the pages load faster -->
 {% block end %}
 {% endblock %}
-<script src="../static/Navbar Template for Bootstrap_files/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="../static/Navbar Template for Bootstrap_files/popper.min.js"></script>
-<script src="../static/Navbar Template for Bootstrap_files/bootstrap.min.js"></script>
-<script src="../static/Navbar Template for Bootstrap_files/jquery-3.3.1.slim.min.js"
+<script src="../static/vendor/Clean Blog - Start Bootstrap Theme_files/jquery.min.js"></script>
+<script src="../static/vendor/Clean Blog - Start Bootstrap Theme_files/bootstrap.bundle.min.js"></script>
+<script src="../static/vendor/Clean Blog - Start Bootstrap Theme_files/clean-blog.min.js"></script>
+<script src="../static/vendor/Navbar Template for Bootstrap_files/popper.min.js"></script>
+<script src="../static/vendor/Navbar Template for Bootstrap_files/bootstrap.min.js"></script>
+<script src="../static/vendor/Navbar Template for Bootstrap_files/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-<script src="../static/Clean Blog - Start Bootstrap Theme_files/jquery.min.js"></script>
-<script src="../static/Clean Blog - Start Bootstrap Theme_files/bootstrap.bundle.min.js"></script>
-<script src="../static/Clean Blog - Start Bootstrap Theme_files/clean-blog.min.js"></script>
 
 </body>
 </html>

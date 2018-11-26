@@ -3,12 +3,14 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import LoginManager
+from flask_moment import Moment
 
 from config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
+moment = Moment()
 login.login_view = 'auth.login'
 #login.login_message = _l('Please log in to access this page.')
 
@@ -19,6 +21,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+    moment.init_app(app)
     app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None
 

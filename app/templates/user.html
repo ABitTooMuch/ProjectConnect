@@ -5,15 +5,18 @@
 <div class="container emp-profile">
     <form method="post">
         <div class="row">
-
             <div class="col-md-5">
                 <div class="profile-head">
                     <h1>
                         {{ user.username }}
                     </h1>
                     <h6>
-                        Join Date: {{user.date_joined}}
+                        Member Since: {{  moment(user.date_joined).format('LL') }}
                     </h6>
+                    <h6>
+                        Active {{  moment(user.last_seen).fromNow() }}
+                    </h6>
+
                     <p><span> Skills:
                                         {% for skill in user.skills %}
                                         {{skill}}
@@ -31,11 +34,6 @@
                     </ul>
                 </div>
             </div>
-            <!--
-                                <div class="col-md-2">
-                                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                                </div>
-            -->
         </div>
         <div class="row">
 
@@ -82,3 +80,4 @@
 </div>
 
 {% endblock %}
+

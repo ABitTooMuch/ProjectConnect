@@ -1,12 +1,14 @@
+from datetime import datetime
+
 from flask_login import current_user, login_required
 from werkzeug.utils import redirect
 
-from app import db
+from app import db, moment
 from flask import render_template, url_for, request, current_app, g
 
 from app.dev.forms import SearchForm
 from app.main import bp
-from app.main.forms import ProjectForm
+from app.main.forms import ProjectForm, EditProject
 from app.models.project import Project
 from app.models.user import User
 
@@ -108,21 +110,43 @@ def search():
     return render_template('search.html', title='Search', projects=projects,
                            next_url=next_url, prev_url=prev_url)
 
+
+@ bp.route('/edit_project/<project_id>', methods=['GET', 'POST'])
+@ login_required
+def edit_project(project_id):
+    form = EditProject()
+    # if the form has valid form data
+    if form.validate_on_submit():
+        project = Project.query.filter_by(id=project_id).first()
+        project.name = form.name.data
+        project.description = form.description.data
+        project.last_update = datetime.utcnow()
+
+        db.session.commit()
+
+        return redirect(url_for('main.my_projects'))
+
+    return render_template('project_edit.html', title='Edit Project', form=form)
+
 @ bp.route('/project2')
 def profile2():
-    return render_template('project2.html')
+    return render_template('-project2.html')
 
 @ bp.route('/user2/<username>')
 def user2(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user2.html', user=user)
+    return render_template('-user2.html', user=user)
 
 @ bp.route('/joey/<username>')
 def joey(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('joey.html', user=user)
+    return render_template('-joey.html', user=user)
 
 @ bp.route('/user3/<username>')
 def user3(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user3.html', user=user)
+    return render_template('-user3.html', user=user)
+
+@ bp.route('/tagtest')
+def tagtest():
+    return render_template('-tagtest.html')

@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     major = db.Column(db.String(128), index=True)
     date_joined = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    last_seen = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     projects = db.relationship('Project', secondary=contributions, lazy='dynamic',
                                backref=db.backref('contributors', lazy='dynamic'))
     skills = db.relationship('Skill', secondary=user_skills, lazy='dynamic',
