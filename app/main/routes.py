@@ -6,9 +6,8 @@ from werkzeug.utils import redirect
 from app import db, moment
 from flask import render_template, url_for, request, current_app, g
 
-from app.dev.forms import SearchForm
 from app.main import bp
-from app.main.forms import ProjectForm, EditProject
+from app.main.forms import ProjectForm, EditProject, SearchForm
 from app.models.project import Project
 from app.models.user import User
 
