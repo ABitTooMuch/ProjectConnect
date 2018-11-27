@@ -15,6 +15,10 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    firstname = db.Column(db.String(128), index=True)
+    lastname = db.Column(db.String(128), index=True)
+    about = db.Column(db.String(1024), index=True)
+    interests = db.Column(db.String(256), index=True)
     major = db.Column(db.String(128), index=True)
     date_joined = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     last_seen = db.Column(db.DateTime, index=True, default=datetime.utcnow())
@@ -24,6 +28,7 @@ class User(UserMixin, db.Model):
                              backref=db.backref('users', lazy='dynamic'))
     projects_liked = db.relationship('Project', secondary=project_likes, lazy='dynamic',
                                      backref=db.backref('liked_by', lazy='dynamic'))
+
 
     # backrefs
     #   membership_requests

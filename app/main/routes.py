@@ -3,18 +3,23 @@ from datetime import datetime
 from flask_login import current_user, login_required
 from werkzeug.utils import redirect
 
-from app import db, moment
+from app import db
 from flask import render_template, url_for, request, current_app, g
 
 from app.main import bp
-from app.main.forms import ProjectForm, EditProject, SearchForm
+from app.main.forms import ProjectForm, SearchForm, EditUserForm
+from app.models.attributes import Tag, Skill
 from app.models.project import Project
 from app.models.user import User
 
 
 @bp.before_app_request
 def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
     g.search_form = SearchForm()
+
 
 @bp.route('/')
 @bp.route('/home')
@@ -43,16 +48,28 @@ def my_projects():
                            next_url=next_url, prev_url=prev_url)
 
 
-@ bp.route('/new_project', methods=['GET', 'POST'])
-@ login_required
+@bp.route('/new_project', methods=['GET', 'POST'])
+@login_required
 def new_project():
     form = ProjectForm()
     # if the form has valid form data
     if form.validate_on_submit():
-        project = Project(name=form.name.data, description=form.description.data)
-
+        project = Project(name=form.name.data,
+                          description=form.description.data,
+                          is_active=form.is_active.data
+                          )
         db.session.add(project)
         current_user.join_project(project)
+        for t in form.tags():
+            tag = Tag.find(t)
+            if tag:
+                if not project.has_tag(tag):
+                    project.add_tag(tag)
+            else:
+                tag = Tag(t)
+                db.session.add(tag)
+                project.add_tag(tag)
+
         db.session.commit()
 
         return redirect(url_for('main.my_projects'))
@@ -96,9 +113,9 @@ def unlike_project(project_id):
     db.session.commit()
     return redirect(url_for('main.project', project_id=project.id))
 
-@ bp.route('/search')
-def search():
 
+@bp.route('/search')
+def search():
     items_per_page = request.args.get('items_per_page', current_app.config['DEFAULT_ITEMS_PER_PAGE'], type=int)
     page_no = request.args.get('page', 1, type=int)
     projects, total = Project.search(g.search_form.q.data, page_no, items_per_page)
@@ -110,15 +127,62 @@ def search():
                            next_url=next_url, prev_url=prev_url)
 
 
-@ bp.route('/edit_project/<project_id>', methods=['GET', 'POST'])
-@ login_required
-def edit_project(project_id):
-    form = EditProject()
+@bp.route('/edit_user', methods=['GET', 'POST'])
+@login_required
+def edit_user():
+    form = EditUserForm()
+    form.populate(current_user)
     # if the form has valid form data
     if form.validate_on_submit():
-        project = Project.query.filter_by(id=project_id).first()
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
+        current_user.major = form.major.data
+        current_user.about = form.about.data
+        current_user.interests = form.interests.data
+
+        for s in form.skills():
+            skill = Skill.find(s)
+            if skill:
+                if not current_user.has_skill(skill):
+                    current_user.add_skill(skill)
+            else:
+                skill = Skill(s)
+                db.session.add(skill)
+                current_user.add_skill(skill)
+
+        current_user.last_update = datetime.utcnow()
+
+        db.session.commit()
+
+        return redirect(url_for('main.user', username=current_user.username))
+
+    return render_template('user_edit.html', title='Edit Profile', form=form)
+
+
+@bp.route('/edit_project/<project_id>', methods=['GET', 'POST'])
+@login_required
+def edit_project(project_id):
+    form = ProjectForm()
+    project = Project.query.filter_by(id=project_id).first()
+    form.populate(project)
+    # if the form has valid form data
+    if form.validate_on_submit():
         project.name = form.name.data
         project.description = form.description.data
+        project.active = form.is_active.data
+
+        for t in form.tags():
+            tag = Tag.find(t)
+            if tag:
+                if not project.has_tag(tag):
+                    project.add_tag(tag)
+                    db.session.commit()
+            else:
+                tag = Tag(t)
+                db.session.add(tag)
+                project.add_tag(tag)
+                db.session.commit()
+
         project.last_update = datetime.utcnow()
 
         db.session.commit()
@@ -127,20 +191,24 @@ def edit_project(project_id):
 
     return render_template('project_edit.html', title='Edit Project', form=form)
 
-@ bp.route('/project2')
-def profile2():
-    return render_template('-project2.html')
 
-@ bp.route('/user2/<username>')
+@bp.route('/delete_project/<project_id>', methods=['GET'])
+@login_required
+def delete_project(project_id):
+    project = Project.query.filter_by(id=project_id).first()
+    db.session.delete(project)
+    db.session.commit()
+    return redirect(url_for('main.my_projects'))
+
+
+@bp.route('/user2/<username>')
+@login_required
 def user2(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('-user2.html', user=user)
-
-@ bp.route('/user3/<username>')
-def user3(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    return render_template('-user3.html', user=user)
-
-@ bp.route('/tagtest')
-def tagtest():
-    return render_template('-tagtest.html')
+    items_per_page = request.args.get('items_per_page', current_app.config['DEFAULT_ITEMS_PER_PAGE'], type=int)
+    page_no = request.args.get('page', 1, type=int)
+    projects = user.projects.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
+    next_url = url_for('main.user', username=username, page=projects.next_num) if projects.has_next else None
+    prev_url = url_for('main.user', username=username, page=projects.prev_num) if projects.has_prev else None
+    return render_template('user.html', title=username, user=user, projects=projects.items,
+                           next_url=next_url, prev_url=prev_url)

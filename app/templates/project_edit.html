@@ -1,23 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit Project </h1>
-    <form action="" method ="post">
-        {{ form.hidden_tag() }} <!-- csrf protection token (hidden field added to form for token) -->
-        <p>
-            {{ form.name.label }}:<br>
-            {{ form.name(size=32) }}
-            {% for error in form.name.errors %}
-            <span style="color: red;"> {{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.description.label }}:<br>
-            {{ form.description() }}
-            {% for error in form.description.errors %}
-            <span style="color: red;"> {{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+
+<div class="container-fluid">
+    <div class="container">
+        <h2 class="text-center" id="title">Edit Project</h2>
+        <hr>
+        <div class="row">
+            <div class="col-md-5">
+                <form role="form" action="" method="post">
+                    <fieldset>
+                        {{ form.hidden_tag() }} <!-- csrf protection token (hidden field added to form for token) -->
+                        <p>
+                            {{ form.name.label }}:<br>
+                            {{ form.name(size=32) }}
+                            {% for error in form.name.errors %}
+                            <span style="color: red;"> {{ error }}</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.description.label }}:<br>
+                            {{ form.description() }}
+                            {% for error in form.description.errors %}
+                            <span style="color: red;"> {{ error }}</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.tags_list.label }}:<br>
+                            {{ form.tags_list(rows=1000,cols=1000) }}
+                            {% for error in form.tags.errors %}
+                            <span style="color: red;"> {{ error }}</span>
+                            {% endfor %}
+                        </p>
+                        <p>{{ form.is_active() }} {{ form.is_active.label }}</p>
+                        <p>{{ form.submit() }}</p>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -6,8 +6,9 @@
     <div class="container">
         <h2 class="text-center" id="title">Project Connect</h2>
         <hr>
-        <div class="row">
-            <div class="col-md-5">
+        <div class="row align-items-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
                 <form role="form" action="" method="post">
                     <fieldset>
                         <form action="" method="post">
@@ -41,10 +42,6 @@
                                 <span style="color: red;"> {{ error }}</span>
                                 {% endfor %}
                             </p>
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
-                                By Clicking register you're agree to our <a href="">policy & terms</a>
-                            </label>
 
                             <p>{{ form.submit() }}</p>
                         </form>
@@ -52,10 +49,6 @@
 
                     </fieldset>
                 </form>
-            </div>
-
-            <div class="col-md-2">
-                <!-------null------>
             </div>
         </div>
     </div>

@@ -23,7 +23,10 @@ def login():
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         # redirect the user to a different page after login
-        return redirect(url_for('main.explore'))
+        if not current_user.firstname:
+            return redirect(url_for('main.edit_user'))
+        else:
+            return redirect(url_for('main.explore'))
 
     return render_template('auth/user_login.html', title='Sign In', form=form)
 

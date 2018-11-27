@@ -1,45 +1,81 @@
 {% extends "base.html" %}
-
 {% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="../static/css/user.css">
 {% endblock %}
 
 {% block content %}
-<span>
-<h1>{{ project.name}}</h1>
-<!-- like button -->
-{% if current_user.is_authenticated %}
-{% if current_user.has_liked_project(project) %}
-<p><a href="{{ url_for('main.unlike_project', project_id=project.id) }}">
-    <button class="btn btn-primary">
-        Unlike {{ project.likes() }}
-    </button>
-</a></p>
-{% else %}
-<p><a href="{{ url_for('main.like_project', project_id=project.id) }}">
-    <button class="btn btn-primary">
-        Like {{ project.likes() }}
-    </button>
-</a></p>
-{% endif %}
-{% else %}
-<p><a href="#">
-    <button class="btn btn-primary">
-        Likes {{ project.likes() }}
-    </button>
-</a></p>
-{% endif %}
-<!-- like button -->
-    </span>
-<em>Last updated on {{ moment(project.last_update).format('LL') }}</em>
-<p>{{project.description}}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <h2 class="card-title">{{ project.name}}</h2>
+                            {% if project.is_active %}
+                            <p><strong>Status:</strong> Active </p>
+                            {% else %}
+                            <p><strong>Status:</strong> Inactive </p>
+                            {% endif %}
+                            <!-- like button -->
+                            {% if current_user.is_authenticated %}
+                            {% if current_user.has_liked_project(project) %}
+                            <p><a href="{{ url_for('main.unlike_project', project_id=project.id) }}">
+                                <button class="btn btn-primary">
+                                    Unlike {{ project.likes() }}
+                                </button>
+                            </a></p>
+                            {% else %}
+                            <p><a href="{{ url_for('main.like_project', project_id=project.id) }}">
+                                <button class="btn btn-primary">
+                                    Like {{ project.likes() }}
+                                </button>
+                            </a></p>
+                            {% endif %}
+                            {% else %}
+                            <p><a href="#">
+                                <button class="btn btn-primary">
+                                    Likes {{ project.likes() }}
+                                </button>
+                            </a></p>
+                            {% endif %}
+                            <!-- like button -->
 
+                            <!-- tags -->
+                            <p><strong>Tags: </strong>
+                                {% set items = project.tags %}
+                                {% include "_clickable_list.html" %}
+                            </p>
 
-<!--<p><span>tags:
-        {% for tag in project.tags %}
-            {{tag}}
-        {% endfor %}
-    </span>-->
+                            <p class="card-text"><strong>Description: </strong> {{project.description}}</p>
+                            <em>Last updated on {{ moment(project.last_update).format('LL') }}</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="my-5">
 <center><h2>Contributors</h2></center>
 {% include "_contributor_list.html" %}
+<!-- End Content -->
 {% endblock %}
 
+<!-- Scripts -->
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+{% endblock %}

@@ -6,6 +6,9 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
 
+    def __init__(self, name):
+        self.name = name
+
     @classmethod
     def find(cls, name):
         return cls.query.filter_by(name=name).first()
@@ -22,6 +25,9 @@ class Skill(db.Model):
     __tablename__ = 'skills'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
+
+    def __init__(self, name):
+        self.name = name
 
     @classmethod
     def find(cls, name):

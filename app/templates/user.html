@@ -1,83 +1,59 @@
 {% extends "base.html" %}
 
-{% block content %}
-
-<div class="container emp-profile">
-    <form method="post">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="profile-head">
-                    <h1>
-                        {{ user.username }}
-                    </h1>
-                    <h6>
-                        Member Since: {{  moment(user.date_joined).format('LL') }}
-                    </h6>
-                    <h6>
-                        Active {{  moment(user.last_seen).fromNow() }}
-                    </h6>
-
-                    <p><span> Skills:
-                                        {% for skill in user.skills %}
-                                        {{skill}}
-                                        {% endfor %}
-                                    </span></p>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                               aria-controls="home" aria-selected="true">Projects</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                               aria-controls="profile" aria-selected="false">About</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        {% include "_project_list.html" %}
-
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Email</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p><b>
-                                    <a href=" mailto:{{ user.email }}">{{ user.email }} </a>
-                                </b></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Phone</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p><b>123 456 7890</b></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Major(s)</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p><b> {{ user.major }}</b></p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="../static/css/user.css">
 {% endblock %}
 
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 text-center">
+                            <img src="../static/images/user.png" alt="" class="btn-md">
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <h2 class="card-title">{{ user.username }}</h2>
+                            <p>Member Since {{ moment(user.date_joined).format('LL') }}</p>
+                            <p class="card-text"><strong>Major: </strong> {{ user.major }} </p>
+                            <p><strong>Interests: </strong></p>
+                            <p><strong>Skills: </strong>
+                                {% set items = user.skills %}
+                                {% include "_clickable_list.html" %}
+                            </p>
+                            <p><b><a href=" mailto:{{ user.email }}">{{ user.email }} </a></b></p>
+                            <em>Active {{ moment(user.last_seen).fromNow() }}</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="my-5">
+<div class="col-12">
+    <h1>Projects</h1>
+    {% include "_project_list.html" %}
+</div>
+{% endblock %}
+<!-- End Content -->
+
+<!-- Scripts -->
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+{% endblock %}

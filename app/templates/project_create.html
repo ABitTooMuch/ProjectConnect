@@ -25,6 +25,14 @@
                             <span style="color: red;"> {{ error }}</span>
                             {% endfor %}
                         </p>
+                        <p>
+                            {{ form.tags_list.label }}:<br>
+                            {{ form.tags_list(rows=1000,cols=1000) }}
+                            {% for error in form.tags.errors %}
+                            <span style="color: red;"> {{ error }}</span>
+                            {% endfor %}
+                        </p>
+                        <p>{{ form.is_active() }} {{ form.is_active.label }}</p>
                         <p>{{ form.submit() }}</p>
                     </fieldset>
                 </form>

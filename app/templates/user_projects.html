@@ -7,7 +7,45 @@
 <h2>Projects</h2>
 
 {% if current_user.projects.all()|length > 0 %}
-{% include "_project_list.html" %}
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Likes</th>
+        <th scope="col">Description</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for project in projects %}
+    <tr>
+        <td scope="row"><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
+        <td>{% if project.is_active %}Active {% else %}Inactive{% endif %}</td>
+        <td>{{project.likes()}}</td>
+        <td>{{ project.description|truncate(200,True,'...')}}</td>
+        <td>
+            <a href="{{ url_for( 'main.edit_project', project_id=project.id) }}">
+                <img src="../static/images/baseline-edit-24px.svg" alt="" class="btn-md">
+            </a>
+
+        </td>
+        <td>
+            <a href="{{ url_for( 'main.delete_project', project_id=project.id) }}">
+                <img src="../static/images/baseline-delete-24px.svg" alt="" class="btn-md">
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if prev_url %}
+<a href="{{ prev_url }}">Previous</a>
+{% endif %}
+{% if next_url %}
+<a href="{{ next_url }}">Next</a>
+{% endif %}
 <p><a href="{{ url_for('main.new_project') }}">New Project</a></p>
 {% else %}
 <p> No projects. <a href="{{ url_for('main.new_project') }}">Create One</a></p>

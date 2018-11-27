@@ -1,0 +1,6 @@
+{% for item in items %}
+{% set button =
+["badge bg-primary", "badge bg-info", "badge bg-warning","badge bg-success"]|random %}
+<a href="{{ url_for('main.search', q=item.name, page=1) }}"><span class="{{ button }}">{{ item.name }} </span></a>
+{% endfor %}
+

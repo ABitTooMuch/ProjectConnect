@@ -1,4 +1,3 @@
-<!-- saved from url=(0051)http://getbootstrap.com/docs/4.1/examples/navbars/# -->
 <html lang="en">
 <head>
 
@@ -19,6 +18,7 @@
     {{ moment.include_jquery() }}
     {{ moment.include_moment() }}
 
+    {% block head %}{% endblock %}
     <link href="../static/vendor/Floating labels for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
     <link href="../static/vendor/Offcanvas template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
     <link href="../static/vendor/Navbar Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
@@ -26,8 +26,6 @@
     <link href="../static/vendor/Floating labels for Bootstrap_files/floating-labels.css" rel="stylesheet">
     <link href="../static/vendor/Offcanvas template for Bootstrap_files/offcanvas.css" rel="stylesheet">
     <link href="../static/vendor/Navbar Template for Bootstrap_files/navbar.css" rel="stylesheet">
-
-    {% block head %}{% endblock %}
 
     <link href="../static/css/base.css" rel="stylesheet">
 
@@ -41,7 +39,7 @@
         <!-- search bar -->
         <form class="" method="get" action="{{ url_for('main.search') }}">
             <div class="form-inline my-2 my-md-0">
-                {{ g.search_form.q(class='form-control', placeholder=g.search_form.q.label.text) }}
+                {{ g.search_form.q(class='form-control', placeholder=g.search_form.q.label.text, size=64) }}
             </div>
         </form>
         <!-- search bar -->
@@ -65,7 +63,7 @@
                     <a class="nav-link" href="{{ url_for('main.user', username=current_user.username) }}">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.my_projects') }}">My Project</a>
+                    <a class="nav-link" href="{{ url_for('main.my_projects') }}">My Projects</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
@@ -102,8 +100,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-{% block end %}
-{% endblock %}
+{% block scripts %}{% endblock %}
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="../static/vendor/Clean Blog - Start Bootstrap Theme_files/jquery.min.js"></script>
 <script src="../static/vendor/Clean Blog - Start Bootstrap Theme_files/bootstrap.bundle.min.js"></script>
@@ -113,6 +110,5 @@
 <script src="../static/vendor/Navbar Template for Bootstrap_files/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-
 </body>
 </html>

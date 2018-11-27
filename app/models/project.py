@@ -7,12 +7,12 @@ from app.models.attributes import Tag, Skill
 
 
 class Project(db.Model, SearchableMixin):
-    __searchable__ = ['name', 'description']
+    __searchable__ = ['name', 'description', 'skills']
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     description = db.Column(db.String(1024))
-    status = db.Column(db.String(64))
+    is_active = db.Column(db.Boolean, unique=False, default=True)
     creation_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     last_update = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 

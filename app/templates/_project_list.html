@@ -1,5 +1,5 @@
 <table class="table table-bordered table-hover">
-    <thead class="thead-light">
+    <thead class="thead-dark">
     <tr>
         <th scope="col">Name</th>
         <th scope="col">Status</th>
@@ -11,9 +11,9 @@
     {% for project in projects %}
     <tr>
         <td scope="row"><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
-        <td>{{project.status}}</td>
+        <td>{% if project.is_active %}Active {% else %}Inactive{% endif %}</td>
         <td>{{project.likes()}}</td>
-        <td>{{project.description}}</td>
+        <td>{{ project.description|truncate(200,True,'...')}}</td>
     </tr>
     {% endfor %}
     </tbody>
