@@ -136,11 +136,6 @@ def user2(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('-user2.html', user=user)
 
-@ bp.route('/joey/<username>')
-def joey(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    return render_template('-joey.html', user=user)
-
 @ bp.route('/user3/<username>')
 def user3(username):
     user = User.query.filter_by(username=username).first_or_404()
