@@ -1,0 +1,33 @@
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Likes</th>
+        <th scope="col">Description</th>
+        <th scope="col">Invite</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for project in projects %}
+    <tr>
+        <td scope="row"><a href="{{ url_for( 'main.project', project_id=project.id) }}">{{project.name}}</a></td>
+        <td>{% if project.is_active %}Active {% else %}Inactive{% endif %}</td>
+        <td>{{project.likes()}}</td>
+        <td>{{ project.description|truncate(200,True,'...')}}</td>
+        <td>{% if not user in project.contributors %}
+            <a href="{{ url_for( 'main.add_to_project', username=user.username, project_id=project.id) }}">
+                <img src="../static/images/baseline-group_add-24px.svg" alt="" class="btn-md">
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if prev_url %}
+<a href="{{ prev_url }}">Previous</a>
+{% endif %}
+{% if next_url %}
+<a href="{{ next_url }}">Next</a>
+{% endif %}

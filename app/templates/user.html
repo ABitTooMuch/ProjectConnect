@@ -19,16 +19,37 @@
                         <div class="col-md-4 col-sm-4 text-center">
                             <img src="../static/images/user.png" alt="" class="btn-md">
                         </div>
-                        <div class="col-md-8 col-sm-8">
-                            <h2 class="card-title">{{ user.username }}</h2>
+                        <div class="col-md-4 col-sm-4">
+                            <h2 class="card-title">{{ user.firstname }} {{user.lastname }}</h2>
+                            <p>
+                                <span><em>"{{user.username }}"</em></span>
+                                <span>
+                                {% if current_user.is_authenticated %}
+                                {% if current_user == user %}
+                                    <a href="{{ url_for( 'main.edit_user', username=user.username) }}">
+                                        <img src="../static/images//baseline-edit-24px.svg"
+                                             alt="" class="filter-white">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ url_for( 'main.invite_to_project', username=user.username) }}">
+                                        <img src="../static/images/baseline-group_add-24px.svg"
+                                             alt="" class="filter-white">
+                                    </a>
+                                {% endif %}
+                                {% endif %}
+                                </span>
+                            </p>
                             <p>Member Since {{ moment(user.date_joined).format('LL') }}</p>
                             <p class="card-text"><strong>Major: </strong> {{ user.major }} </p>
-                            <p><strong>Interests: </strong></p>
                             <p><strong>Skills: </strong>
                                 {% set items = user.skills %}
                                 {% include "_clickable_list.html" %}
                             </p>
                             <p><b><a href=" mailto:{{ user.email }}">{{ user.email }} </a></b></p>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <p><strong>Interests: </strong> {{ user.interests }}</p>
+                            <p><strong>About Me: </strong> {{ user.about }}</p>
                             <em>Active {{ moment(user.last_seen).fromNow() }}</em>
                         </div>
                     </div>
@@ -37,7 +58,7 @@
         </div>
     </div>
 </div>
-<hr class="my-5">
+<hr class="my-2">
 <div class="col-12">
     <h1>Projects</h1>
     {% include "_project_list.html" %}

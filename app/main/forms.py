@@ -43,16 +43,16 @@ class EditUserForm(FlaskForm):
     def populate(self, user):
         if user.firstname:
             self.firstname.data = user.firstname
-        if user.firstname:
+        if user.lastname:
             self.lastname.data = user.lastname
-        if user.firstname:
+        if user.major:
             self.major.data = user.major
-        if user.firstname:
+        if user.about:
             self.about.data = user.about
-        if user.firstname:
+        if user.interests:
             self.interests.data = user.interests
-        if user.firstname:
-            self.skills_list.default = ",".join(skill.name for skill in user.skills)
+        if user.skills:
+            self.skills_list.data = ",".join(skill.name for skill in user.skills)
 
     def skills(self):
         return [skill.strip() for skill in self.skills_list.data.split(",")]

@@ -30,8 +30,6 @@ def explore():
     projects = Project.query.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
     next_url = url_for('main.explore', page=projects.next_num) if projects.has_next else None
     prev_url = url_for('main.explore', page=projects.prev_num) if projects.has_prev else None
-    print(projects.has_next)
-    print(next_url)
     return render_template('explore.html', title='Explore', projects=projects.items,
                            next_url=next_url, prev_url=prev_url)
 
@@ -201,14 +199,31 @@ def delete_project(project_id):
     return redirect(url_for('main.my_projects'))
 
 
-@bp.route('/user2/<username>')
+@bp.route('/invite_to_project/<username>', methods=['GET'])
 @login_required
-def user2(username):
+def invite_to_project(username):
     user = User.query.filter_by(username=username).first_or_404()
     items_per_page = request.args.get('items_per_page', current_app.config['DEFAULT_ITEMS_PER_PAGE'], type=int)
     page_no = request.args.get('page', 1, type=int)
-    projects = user.projects.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
-    next_url = url_for('main.user', username=username, page=projects.next_num) if projects.has_next else None
-    prev_url = url_for('main.user', username=username, page=projects.prev_num) if projects.has_prev else None
-    return render_template('user.html', title=username, user=user, projects=projects.items,
-                           next_url=next_url, prev_url=prev_url)
+    projects = current_user.projects.order_by(Project.last_update.desc()).paginate(page_no, items_per_page, False)
+    next_url = url_for('main.project_invite', username=username, page=projects.next_num) if projects.has_next else None
+    prev_url = url_for('main.project_invite', username=username, page=projects.prev_num) if projects.has_prev else None
+    return render_template('project_invite.html', title='Project Invite',
+                           user=user, projects=projects.items, next_url=next_url, prev_url=prev_url)
+
+
+@bp.route('/add_to_project', methods=['GET'])
+@login_required
+def add_to_project():
+    username = request.args.get('username', None, type=str)
+    project_id = request.args.get('project_id', None, type=str)
+    print(username+","+project_id)
+    if username and project_id:
+        user = User.query.filter_by(username=username).first()
+        project = Project.query.filter_by(id=project_id).first()
+        if current_user in project.contributors \
+                and user not in project.contributors:
+            user.join_project(project)
+            db.session.commit()
+        return redirect(url_for('main.user', username=user.username))
+    return redirect(url_for('main.explore'))
